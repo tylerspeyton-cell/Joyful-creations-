@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Quote | Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER / NAV ===== -->
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html" class="active">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<div style="background:linear-gradient(135deg, var(--dark) 0%, var(--accent) 100%); color:var(--white); padding:4rem 1.5rem; text-align:center;">
+  <h1 style="color:var(--gold); font-size:2.2rem; margin-bottom:1rem;">Something Unique, Just for You</h1>
+  <p style="max-width:640px; margin:0 auto; font-size:1.05rem; line-height:1.8; opacity:0.9;">
+    Don't see exactly what you're looking for in my shop? I love bringing custom ideas to life.
+    Whether it's a personalized gift, a one-of-a-kind piece, or something you've been dreaming up —
+    I can make it happen. And the best part? <strong style="color:var(--gold);">Your quote is completely free.</strong>
+  </p>
+</div>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="section">
+  <h2 class="section-title">How It Works</h2>
+  <div class="perks" style="margin-top:2rem;">
+    <div class="perk">
+      <div class="perk-icon">&#9997;</div>
+      <h3>Tell Me Your Vision</h3>
+      <p>Fill out the short form below with your idea. The more detail, the better — but anything is a great starting point.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128172;</div>
+      <h3>I'll Reach Out</h3>
+      <p>I'll contact you within 1-2 business days to discuss your idea and send a detailed, no-obligation quote.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#10003;</div>
+      <h3>You Decide</h3>
+      <p>No pressure. If the quote works for you, we move forward. If not, there's no cost and no hard feelings.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#127873;</div>
+      <h3>I Create It</h3>
+      <p>Once approved, I get to work crafting your unique piece with the same care I put into everything I make.</p>
+    </div>
+  </div>
+
+  <!-- CTA LINK -->
+  <div style="text-align:center; margin:2rem 0;">
+    <p style="font-size:1.1rem; color:#555; margin-bottom:1rem;">Ready to get started?</p>
+    <a href="#quote-form" class="btn">Get a Free Quote Now</a>
+  </div>
+</section>
+
+<!-- ===== QUOTE FORM ===== -->
+<div style="background:var(--white); border-top:1px solid #e0d9cc;">
+  <div class="form-page" id="quote-form">
+    <h1>Request Your Free Quote</h1>
+    <p class="subtitle">Fill out the form below and I'll get back to you with pricing. No obligation, always free.</p>
+
+    <!--
+      IMPORTANT: Replace "YOUR_FORM_ID" with your actual Formspree endpoint.
+      Sign up free at formspree.io, create a form, and paste your ID here.
+      Or replace the entire action with your preferred form handler.
+      Change the email in formspree to your business email.
+    -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="_subject" value="New Custom Quote Request" />
+
+      <div class="form-group">
+        <label for="q-name">Your Name *</label>
+        <input type="text" id="q-name" name="Name" required placeholder="Jane Smith" />
+      </div>
+
+      <div class="form-group">
+        <label for="q-email">Email Address *</label>
+        <input type="email" id="q-email" name="Email" required placeholder="jane@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="q-phone">Phone Number (optional)</label>
+        <input type="tel" id="q-phone" name="Phone" placeholder="(555) 000-0000" />
+      </div>
+
+      <div class="form-group">
+        <label for="q-idea">Describe Your Idea *</label>
+        <textarea id="q-idea" name="Idea" required placeholder="Tell me about what you have in mind — size, materials, colors, occasion, anything that helps me understand your vision..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="q-budget">Approximate Budget (optional)</label>
+        <input type="text" id="q-budget" name="Budget" placeholder="e.g. $50–$100" />
+      </div>
+
+      <div class="form-group">
+        <label for="q-deadline">Do you have a deadline? (optional)</label>
+        <input type="text" id="q-deadline" name="Deadline" placeholder="e.g. needed by Dec 15" />
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" class="btn">Send My Quote Request</button>
+      </div>
+      <p class="form-note">I typically respond within 1-2 business days. I look forward to creating something special for you!</p>
+    </form>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

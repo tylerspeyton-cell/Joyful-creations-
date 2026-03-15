@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers | Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER / NAV ===== -->
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<div style="background:linear-gradient(135deg, var(--dark) 0%, var(--accent) 100%); color:var(--white); padding:4.5rem 1.5rem; text-align:center;">
+  <h1 style="color:var(--gold); font-size:2.4rem; margin-bottom:1rem;">Earn Money by Sharing What You Love</h1>
+  <p style="max-width:650px; margin:0 auto; font-size:1.1rem; line-height:1.8; opacity:0.9;">
+    You don't need a shop, inventory, or any special skills.
+    If you have a social media account, a phone, and a passion for sharing great products —
+    you have everything you need to start earning with me.
+  </p>
+</div>
+
+<!-- ===== ABOUT THE OPPORTUNITY ===== -->
+<section class="section">
+  <h2 class="section-title">How It Works</h2>
+  <p>
+    I create the products. You share them. When someone buys through you, you get paid.
+    It's that simple. Whether you want to post on Instagram, TikTok, Facebook, or just
+    tell friends and family — every sale you bring in earns you a commission.
+    No inventory. No shipping. No hassle.
+  </p>
+
+  <div class="perks">
+    <div class="perk">
+      <div class="perk-icon">&#128248;</div>
+      <h3>Share on Social Media</h3>
+      <p>Post photos, stories, or videos of my products on any platform you use. Your audience becomes your income.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128176;</div>
+      <h3>Earn Per Sale</h3>
+      <p>Every time someone buys because of your referral, you earn a commission. The more you share, the more you earn.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128338;</div>
+      <h3>Work on Your Schedule</h3>
+      <p>This is fully flexible. Share when you want, as much or as little as you like — there are no quotas or minimums.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#129309;</div>
+      <h3>I Handle Everything Else</h3>
+      <p>I take care of making, packaging, and shipping every order. You focus on sharing — I'll handle the rest.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#127775;</div>
+      <h3>No Experience Needed</h3>
+      <p>You don't need marketing experience. If you can share a post, you can do this.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128640;</div>
+      <h3>Grow as You Go</h3>
+      <p>Start small and grow your earnings over time. The potential is unlimited — it scales with your effort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BANNER ===== -->
+<div class="banner">
+  <h2>Ready to Start Earning?</h2>
+  <p>
+    If you want to make passive income by marketing products you actually believe in,
+    I'd love to work with you. Fill out the short form below and I'll reach out with all the details.
+  </p>
+  <a href="#careers-form" class="btn">If you want to make passive income, click here</a>
+</div>
+
+<!-- ===== CAREERS FORM ===== -->
+<div style="background:var(--white); border-top:1px solid #e0d9cc;">
+  <div class="form-page" id="careers-form">
+    <h1>Let's Work Together</h1>
+    <p class="subtitle">Tell me a little about yourself and I'll get back to you with the details on how to get started.</p>
+
+    <!--
+      IMPORTANT: Replace "YOUR_FORM_ID" with your actual Formspree endpoint.
+      Sign up free at formspree.io — use your business email when creating the form.
+    -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="_subject" value="New Marketing Partner Inquiry" />
+
+      <div class="form-group">
+        <label for="c-name">Your Name *</label>
+        <input type="text" id="c-name" name="Name" required placeholder="Jane Smith" />
+      </div>
+
+      <div class="form-group">
+        <label for="c-email">Email Address *</label>
+        <input type="email" id="c-email" name="Email" required placeholder="jane@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="c-phone">Phone Number (optional)</label>
+        <input type="tel" id="c-phone" name="Phone" placeholder="(555) 000-0000" />
+      </div>
+
+      <div class="form-group">
+        <label for="c-platforms">What platforms do you use? (optional)</label>
+        <input type="text" id="c-platforms" name="Platforms" placeholder="e.g. Instagram, TikTok, Facebook..." />
+      </div>
+
+      <div class="form-group">
+        <label for="c-message">Anything else you'd like me to know? (optional)</label>
+        <textarea id="c-message" name="Message" placeholder="Tell me about yourself, your audience, or why you're interested..."></textarea>
+      </div>
+
+      <div class="form-submit">
+        <button type="submit" class="btn">Send My Application</button>
+      </div>
+      <p class="form-note">I'll follow up within 1-2 business days with everything you need to get started.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place Your Order | Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER / NAV ===== -->
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== ORDER FORM ===== -->
+<div class="form-page">
+  <h1>Place Your Order</h1>
+  <p class="subtitle" id="order-subtitle">Fill out the form below and I'll be in touch to confirm your order.</p>
+
+  <!--
+    IMPORTANT: To receive these orders by email you need to connect this form
+    to a service. Two easy free options:
+      1. Formspree.io — create a free account, get your form endpoint,
+         replace "YOUR_FORM_ID" in the action URL below.
+      2. Netlify Forms — if you host on Netlify, just add netlify attribute.
+    Replace the action below:
+      action="https://formspree.io/f/YOUR_FORM_ID"
+  -->
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+    <!-- Hidden fields passed from product page -->
+    <input type="hidden" name="Product" id="field-item" value="" />
+    <input type="hidden" name="Price" id="field-price" value="" />
+
+    <!-- Product summary (read-only display) -->
+    <div class="form-group" id="product-summary" style="display:none;">
+      <label>Item Ordered</label>
+      <input type="text" id="display-item" readonly style="background:#f0ece4; cursor:default;" />
+    </div>
+
+    <!-- Contact Info -->
+    <div class="form-group">
+      <label for="full-name">Full Name *</label>
+      <input type="text" id="full-name" name="Full Name" required placeholder="Jane Smith" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="Email" required placeholder="jane@example.com" />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number *</label>
+      <input type="tel" id="phone" name="Phone" required placeholder="(555) 000-0000" />
+    </div>
+
+    <!-- Shipping Address -->
+    <div class="form-group">
+      <label for="address">Street Address *</label>
+      <input type="text" id="address" name="Street Address" required placeholder="123 Main St" />
+    </div>
+
+    <div class="form-group">
+      <label for="city">City *</label>
+      <input type="text" id="city" name="City" required placeholder="Springfield" />
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+      <div class="form-group">
+        <label for="state">State *</label>
+        <input type="text" id="state" name="State" required placeholder="IL" maxlength="2" />
+      </div>
+      <div class="form-group">
+        <label for="zip">ZIP Code *</label>
+        <input type="text" id="zip" name="ZIP" required placeholder="62701" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Special Instructions (optional)</label>
+      <textarea id="notes" name="Special Instructions" placeholder="Any custom details, gift notes, or delivery instructions..."></textarea>
+    </div>
+
+    <!-- Payment -->
+    <div class="payment-section">
+      <h3>Payment Method</h3>
+      <div class="form-group">
+        <label for="payment">How would you like to pay? *</label>
+        <select id="payment" name="Payment Method" required>
+          <option value="" disabled selected>Select a payment method</option>
+          <option value="Venmo">Venmo</option>
+          <option value="Cash App">Cash App</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Zelle">Zelle</option>
+          <option value="Cash">Cash (local pickup)</option>
+        </select>
+      </div>
+
+      <!-- Payment info boxes — fill in YOUR handles below -->
+      <div class="payment-info-box" id="pay-venmo">
+        <h4>Send payment via Venmo</h4>
+        <div class="payment-handle">@YourVenmoHandle</div>
+        <a class="pay-link" href="https://venmo.com/YourVenmoHandle" target="_blank" rel="noopener">Open Venmo</a>
+        <p class="pay-note">Please include your order name in the note. Payment is due within 24 hours of order confirmation.</p>
+      </div>
+
+      <div class="payment-info-box" id="pay-cashapp">
+        <h4>Send payment via Cash App</h4>
+        <div class="payment-handle">$YourCashTag</div>
+        <a class="pay-link" href="https://cash.app/$YourCashTag" target="_blank" rel="noopener">Open Cash App</a>
+        <p class="pay-note">Include your name and order item in the note.</p>
+      </div>
+
+      <div class="payment-info-box" id="pay-paypal">
+        <h4>Send payment via PayPal</h4>
+        <div class="payment-handle">your@email.com</div>
+        <a class="pay-link" href="https://paypal.me/YourPayPalLink" target="_blank" rel="noopener">Pay with PayPal</a>
+        <p class="pay-note">Please use "Friends &amp; Family" or note your order in the memo.</p>
+      </div>
+
+      <div class="payment-info-box" id="pay-zelle">
+        <h4>Send payment via Zelle</h4>
+        <div class="payment-handle">your@email.com &nbsp;or&nbsp; (555) 000-0000</div>
+        <p class="pay-note">Send through your bank's Zelle feature. Include your name and order in the memo.</p>
+      </div>
+
+      <div class="payment-info-box" id="pay-cash">
+        <h4>Cash — Local Pickup</h4>
+        <p class="pay-note" style="font-size:0.95rem; color:#555;">We'll arrange a pickup location after your order is confirmed. Payment is collected at pickup.</p>
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <button type="submit" class="btn">Submit Order</button>
+    </div>
+    <p class="form-note">I'll confirm your order and follow up within 1-2 business days.</p>
+  </form>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+</footer>
+
+<script>
+  // Pull product info from URL params (e.g. order.html?item=Wood+Sign&price=$45.00)
+  const params = new URLSearchParams(window.location.search);
+  const item  = params.get('item');
+  const price = params.get('price');
+
+  if (item) {
+    document.getElementById('field-item').value  = item;
+    document.getElementById('display-item').value = price ? `${item} — ${price}` : item;
+    document.getElementById('product-summary').style.display = 'flex';
+    document.getElementById('order-subtitle').textContent =
+      `You're ordering: ${item}${price ? ' ('+price+')' : ''}. Fill out the form below and I'll be in touch to confirm.`;
+    if (price) document.getElementById('field-price').value = price;
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Show payment info when method is selected
+  const paymentSelect = document.getElementById('payment');
+  const payBoxMap = {
+    'Venmo':    'pay-venmo',
+    'Cash App': 'pay-cashapp',
+    'PayPal':   'pay-paypal',
+    'Zelle':    'pay-zelle',
+    'Cash':     'pay-cash',
+  };
+  paymentSelect.addEventListener('change', function () {
+    Object.values(payBoxMap).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('visible');
+    });
+    const target = payBoxMap[this.value];
+    if (target) document.getElementById(target).classList.add('visible');
+  });
+</script>
+</body>
+</html>

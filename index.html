@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== HEADER / NAV ===== -->
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li>
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ===== HERO / MISSION STATEMENT ===== -->
+<section class="hero">
+  <h1>Handcrafted with Heart,<br>Made for You.</h1>
+  <p>
+    <!-- EDIT THIS: Replace with your mission statement -->
+    Every piece I create is made with intention, passion, and craftsmanship.
+    My mission is to bring meaningful, one-of-a-kind creations into your life —
+    pieces that tell a story and stand the test of time.
+  </p>
+  <a href="creations.html" class="btn">Browse Creations &amp; Pricing</a>
+</section>
+
+<!-- ===== ABOUT ME ===== -->
+<section class="about-strip">
+  <div class="about-inner">
+    <!--
+      Replace the placeholder below with an actual <img> tag when you have a photo:
+      <img src="images/your-photo.jpg" alt="Maggie Peyton" class="about-photo" />
+    -->
+    <img src="images/me.jpg" alt="Maggie Peyton" class="about-photo" />
+    <div class="about-text">
+      <h2>Hi, I'm Maggie Peyton</h2>
+      <p>
+        <!-- EDIT THIS: Replace with your personal story -->
+        I'm a Dallas-based creator with a passion for [what you make].
+        What started as a hobby has grown into a business built on quality and
+        personal connection. I take pride in every item that leaves my hands —
+        whether it's a customer-favorite piece or something entirely custom just for you.
+        <br><br>
+        I'm grateful for every customer who has trusted me with their vision.
+        Let me create something special for you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== QUICK LINKS ===== -->
+<section class="section">
+  <h2 class="section-title">What I Offer</h2>
+  <div class="grid" style="margin-top:2rem;">
+
+    <a href="creations.html" class="card" style="text-decoration:none;">
+      <div class="card-img-placeholder">Browse Gallery</div>
+      <div class="card-body">
+        <div class="card-title">Popular Creations &amp; Pricing</div>
+        <div class="card-desc">Browse my most-loved pieces, see pricing, and place your order directly online.</div>
+        <span class="btn">Shop Now</span>
+      </div>
+    </a>
+
+    <a href="quotes.html" class="card" style="text-decoration:none;">
+      <div class="card-img-placeholder">Custom Work</div>
+      <div class="card-body">
+        <div class="card-title">Custom &amp; Unique Creations</div>
+        <div class="card-desc">Have something specific in mind? I'll craft it just for you. Get a free quote with no obligation.</div>
+        <span class="btn">Get a Free Quote</span>
+      </div>
+    </a>
+
+    <a href="careers.html" class="card" style="text-decoration:none;">
+      <div class="card-img-placeholder">Work With Me</div>
+      <div class="card-body">
+        <div class="card-title">Earn by Marketing</div>
+        <div class="card-desc">Interested in making passive income? Market my products and earn money from every sale you bring in.</div>
+        <span class="btn">Learn More</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ===== REVIEWS PLACEHOLDER ===== -->
+<section class="banner" id="reviews">
+  <h2>Reviews</h2>
+  <p>Customer reviews coming soon. Check back shortly — I'm grateful for every kind word from my customers!</p>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>Handmade with love &mdash; &copy; <span id="year"></span></p>
+  <p style="margin-top:0.5rem;">Questions? <a href="quotes.html" style="color:var(--gold);">Contact me here.</a></p>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
