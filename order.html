@@ -12,9 +12,10 @@
 <header>
   <nav>
     <a class="brand" href="index.html">Joyful Creations</a>
-    <ul class="nav-links">
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li>
+      <li class="has-dropdown">
         <a href="#">Menu ▾</a>
         <ul class="dropdown">
           <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
@@ -109,6 +110,7 @@
           <option value="Cash App">Cash App</option>
           <option value="PayPal">PayPal</option>
           <option value="Zelle">Zelle</option>
+          <option value="Square">Square</option>
           <option value="Cash">Cash (local pickup)</option>
         </select>
       </div>
@@ -141,6 +143,13 @@
         <p class="pay-note">Send through your bank's Zelle feature. Include your name and order in the memo.</p>
       </div>
 
+      <div class="payment-info-box" id="pay-square">
+        <h4>Pay with Square</h4>
+        <div class="payment-handle">Secure checkout link</div>
+        <a class="pay-link" href="https://square.link/u/gCDimz6v" target="_blank" rel="noopener">Open Square Checkout</a>
+        <p class="pay-note">Use this secure checkout link to complete payment. Please include your order name when prompted.</p>
+      </div>
+
       <div class="payment-info-box" id="pay-cash">
         <h4>Cash — Local Pickup</h4>
         <p class="pay-note" style="font-size:0.95rem; color:#555;">We'll arrange a pickup location after your order is confirmed. Payment is collected at pickup.</p>
@@ -161,6 +170,17 @@
 </footer>
 
 <script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.textContent = '☰';
+  }));
+
   // Pull product info from URL params (e.g. order.html?item=Wood+Sign&price=$45.00)
   const params = new URLSearchParams(window.location.search);
   const item  = params.get('item');
@@ -184,6 +204,7 @@
     'Cash App': 'pay-cashapp',
     'PayPal':   'pay-paypal',
     'Zelle':    'pay-zelle',
+    'Square':   'pay-square',
     'Cash':     'pay-cash',
   };
   paymentSelect.addEventListener('change', function () {

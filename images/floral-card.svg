@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Elegant floral bouquet">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbf7ef"/>
+      <stop offset="100%" stop-color="#efe3ce"/>
+    </linearGradient>
+    <radialGradient id="rosePink" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffdce5"/>
+      <stop offset="100%" stop-color="#e6a4b8"/>
+    </radialGradient>
+    <radialGradient id="roseCream" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#fff5de"/>
+      <stop offset="100%" stop-color="#efc788"/>
+    </radialGradient>
+    <radialGradient id="roseLav" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#f1e9ff"/>
+      <stop offset="100%" stop-color="#bda4e7"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <ellipse cx="600" cy="610" rx="420" ry="65" fill="#d8c5a3" opacity="0.45"/>
+
+  <g stroke="#6f9258" stroke-width="10" stroke-linecap="round" fill="none">
+    <path d="M600 560 C 560 420, 430 340, 320 250"/>
+    <path d="M600 560 C 620 430, 730 330, 860 230"/>
+    <path d="M600 560 C 610 430, 595 340, 600 210"/>
+    <path d="M600 560 C 520 445, 500 390, 470 300"/>
+    <path d="M600 560 C 690 445, 720 370, 760 285"/>
+  </g>
+
+  <g fill="#7ea667" opacity="0.95">
+    <ellipse cx="530" cy="430" rx="38" ry="16" transform="rotate(-28 530 430)"/>
+    <ellipse cx="676" cy="420" rx="40" ry="16" transform="rotate(22 676 420)"/>
+    <ellipse cx="585" cy="360" rx="34" ry="14" transform="rotate(-8 585 360)"/>
+    <ellipse cx="460" cy="345" rx="34" ry="14" transform="rotate(-35 460 345)"/>
+    <ellipse cx="742" cy="348" rx="36" ry="14" transform="rotate(30 742 348)"/>
+  </g>
+
+  <g transform="translate(320 250)">
+    <circle r="62" fill="url(#rosePink)"/>
+    <circle cx="-42" cy="-18" r="30" fill="#ffd7e2"/>
+    <circle cx="42" cy="-18" r="30" fill="#ffd7e2"/>
+    <circle cx="-38" cy="30" r="28" fill="#f6bed0"/>
+    <circle cx="40" cy="28" r="28" fill="#f6bed0"/>
+    <circle r="16" fill="#c98ba0"/>
+  </g>
+
+  <g transform="translate(860 230)">
+    <circle r="60" fill="url(#roseCream)"/>
+    <circle cx="-42" cy="-18" r="29" fill="#fff0cf"/>
+    <circle cx="42" cy="-18" r="29" fill="#fff0cf"/>
+    <circle cx="-38" cy="30" r="27" fill="#f6d59e"/>
+    <circle cx="40" cy="30" r="27" fill="#f6d59e"/>
+    <circle r="16" fill="#cf9c4f"/>
+  </g>
+
+  <g transform="translate(600 210)">
+    <circle r="58" fill="url(#roseLav)"/>
+    <circle cx="-40" cy="-18" r="28" fill="#f0e8ff"/>
+    <circle cx="40" cy="-18" r="28" fill="#f0e8ff"/>
+    <circle cx="-36" cy="28" r="26" fill="#d8c6f5"/>
+    <circle cx="38" cy="28" r="26" fill="#d8c6f5"/>
+    <circle r="15" fill="#aa90d5"/>
+  </g>
+
+  <g transform="translate(470 300)">
+    <circle r="48" fill="url(#roseCream)"/>
+    <circle cx="-33" cy="-14" r="24" fill="#fff0cf"/>
+    <circle cx="33" cy="-14" r="24" fill="#fff0cf"/>
+    <circle cx="-30" cy="24" r="22" fill="#f6d59e"/>
+    <circle cx="30" cy="24" r="22" fill="#f6d59e"/>
+    <circle r="12" fill="#cf9c4f"/>
+  </g>
+
+  <g transform="translate(760 285)">
+    <circle r="50" fill="url(#rosePink)"/>
+    <circle cx="-35" cy="-15" r="24" fill="#ffd7e2"/>
+    <circle cx="35" cy="-15" r="24" fill="#ffd7e2"/>
+    <circle cx="-31" cy="24" r="22" fill="#f6bed0"/>
+    <circle cx="31" cy="24" r="22" fill="#f6bed0"/>
+    <circle r="12" fill="#c98ba0"/>
+  </g>
+
+  <path d="M510 560 L690 560 L655 645 L545 645 Z" fill="#c69a64"/>
+  <path d="M528 558 L672 558 L648 640 L552 640 Z" fill="#d8b07a"/>
+</svg>
