@@ -241,16 +241,72 @@ nav {
   background: #c8d8b8;
 }
 
+.featured-product-img {
+  object-fit: contain;
+  background: #f7f3ea;
+}
+
 .card-img-placeholder {
   width: 100%;
   height: 220px;
-  background: linear-gradient(135deg, #c8d8b8, #a8c098);
+  background: linear-gradient(135deg, #2d4424 0%, #4a7a3a 60%, #6b8f5e 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6a7a60;
-  font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
 }
+
+.card-img-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 18px,
+    rgba(255,255,255,0.04) 18px,
+    rgba(255,255,255,0.04) 36px
+  );
+}
+
+.cs-inner {
+  text-align: center;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cs-icon {
+  font-size: 2rem;
+  color: var(--gold);
+  opacity: 0.9;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+.cs-label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.cs-sub {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.15); }
+}
+
+.card.coming-soon { opacity: 1; }
 
 .card-body {
   padding: 1.2rem;
