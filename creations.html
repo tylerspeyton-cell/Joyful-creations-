@@ -59,7 +59,10 @@
         <div class="card-title">Shabby Chic Floral Sign</div>
         <div class="card-price">$75</div>
         <div class="card-desc">Hand-crafted sign great for entryways, dorm rooms, bedrooms, or simply decoration. Flower colors are customizable, and the text can be personalized with up to 10 characters.</div>
-        <a href="order.html?item=Shabby+Chic+Floral+Sign&price=%2475" class="btn">Order Now</a>
+        <a id="embedded-checkout-modal-checkout-button"
+           data-url="https://square.link/u/gCDimz6v?src=embd"
+           href="https://square.link/u/gCDimz6v?src=embed"
+           class="btn square-pay-btn">Buy Now — Pay with Square</a>
       </div>
     </div>
 
@@ -111,6 +114,29 @@
   <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ── Square Embedded Checkout Modal ──────────────────────
+  function showCheckoutWindow(e) {
+    e.preventDefault();
+    const url = document.getElementById('embedded-checkout-modal-checkout-button').getAttribute('data-url');
+    const title = 'Square Payment Links';
+    const topWindow = window.top ? window.top : window;
+    const dualScreenLeft = topWindow.screenLeft !== undefined ? topWindow.screenLeft : topWindow.screenX;
+    const dualScreenTop  = topWindow.screenTop  !== undefined ? topWindow.screenTop  : topWindow.screenY;
+    const width  = topWindow.innerWidth  || document.documentElement.clientWidth  || screen.width;
+    const height = topWindow.innerHeight || document.documentElement.clientHeight || screen.height;
+    const h = height * 0.75;
+    const w = 500;
+    const systemZoom = width / topWindow.screen.availWidth;
+    const left = (width  - w) / 2 / systemZoom + dualScreenLeft;
+    const top  = (height - h) / 2 / systemZoom + dualScreenTop;
+    const newWindow = window.open(url, title, `scrollbars=yes, width=${w / systemZoom}, height=${h / systemZoom}, top=${top}, left=${left}`);
+    if (window.focus) newWindow.focus();
+  }
+
+  document.getElementById('embedded-checkout-modal-checkout-button').addEventListener('click', showCheckoutWindow);
+</script>
 </body>
 </html>
