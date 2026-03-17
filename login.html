@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In | Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="has-dropdown">
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="form-page" style="margin-top:3rem;">
+
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tab-signin">Sign In</button>
+    <button class="auth-tab" id="tab-signup">Create Account</button>
+  </div>
+
+  <!-- SIGN IN PANEL -->
+  <div id="panel-signin">
+    <h1 style="margin-top:1.5rem;">Welcome Back</h1>
+    <p class="subtitle">Sign in to your Joyful Creations account.</p>
+    <form id="signinForm">
+      <div class="form-group">
+        <label for="si-email">Email Address</label>
+        <input type="email" id="si-email" required placeholder="jane@example.com" />
+      </div>
+      <div class="form-group">
+        <label for="si-pass">Password</label>
+        <input type="password" id="si-pass" required placeholder="••••••••" />
+      </div>
+      <div id="si-error" class="review-error" style="display:none;"></div>
+      <div class="form-submit">
+        <button type="submit" class="btn" style="width:100%;">Sign In</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- SIGN UP PANEL -->
+  <div id="panel-signup" style="display:none;">
+    <h1 style="margin-top:1.5rem;">Create Account</h1>
+    <p class="subtitle">Join Joyful Creations to place and track orders.</p>
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="su-name">Full Name *</label>
+        <input type="text" id="su-name" required placeholder="Jane Smith" />
+      </div>
+      <div class="form-group">
+        <label for="su-email">Email Address *</label>
+        <input type="email" id="su-email" required placeholder="jane@example.com" />
+      </div>
+      <div class="form-group">
+        <label for="su-pass">Password *</label>
+        <input type="password" id="su-pass" required placeholder="••••••••" minlength="6" />
+      </div>
+      <div class="form-group">
+        <label for="su-phone">Phone Number *</label>
+        <input type="tel" id="su-phone" required placeholder="(555) 000-0000" />
+      </div>
+      <div class="form-group">
+        <label for="su-address">Street Address *</label>
+        <input type="text" id="su-address" required placeholder="123 Main St" />
+      </div>
+      <div class="form-group">
+        <label for="su-city">City *</label>
+        <input type="text" id="su-city" required placeholder="Dallas" />
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;" class="zip-row">
+        <div class="form-group">
+          <label for="su-state">State *</label>
+          <input type="text" id="su-state" required placeholder="TX" maxlength="2" />
+        </div>
+        <div class="form-group">
+          <label for="su-zip">ZIP Code *</label>
+          <input type="text" id="su-zip" required placeholder="75001" />
+        </div>
+      </div>
+      <div id="su-error" class="review-error" style="display:none;"></div>
+      <div class="form-submit">
+        <button type="submit" class="btn" style="width:100%;">Create Account</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.textContent = '☰';
+  }));
+
+  // Tabs
+  const tabSignin  = document.getElementById('tab-signin');
+  const tabSignup  = document.getElementById('tab-signup');
+  const panelIn    = document.getElementById('panel-signin');
+  const panelUp    = document.getElementById('panel-signup');
+
+  tabSignin.addEventListener('click', () => {
+    tabSignin.classList.add('active'); tabSignup.classList.remove('active');
+    panelIn.style.display = ''; panelUp.style.display = 'none';
+  });
+  tabSignup.addEventListener('click', () => {
+    tabSignup.classList.add('active'); tabSignin.classList.remove('active');
+    panelUp.style.display = ''; panelIn.style.display = 'none';
+  });
+
+  if (new URLSearchParams(window.location.search).get('mode') === 'signup') tabSignup.click();
+
+  // Redirect after login
+  const REDIRECT = new URLSearchParams(window.location.search).get('redirect') || 'creations.html';
+
+  async function hashStr(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('joyful_users')) || []; }
+    catch { return []; }
+  }
+
+  // SIGN IN
+  document.getElementById('signinForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email  = document.getElementById('si-email').value.trim().toLowerCase();
+    const hash   = await hashStr(document.getElementById('si-pass').value);
+    const errEl  = document.getElementById('si-error');
+    const user   = getUsers().find(u => u.email === email && u.passwordHash === hash);
+    if (!user) {
+      errEl.textContent = 'Incorrect email or password.';
+      errEl.style.display = 'block';
+      return;
+    }
+    localStorage.setItem('joyful_session', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+    window.location.href = REDIRECT;
+  });
+
+  // SIGN UP
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('su-error');
+    const email = document.getElementById('su-email').value.trim().toLowerCase();
+    const users = getUsers();
+    if (users.find(u => u.email === email)) {
+      errEl.textContent = 'An account with that email already exists. Please sign in.';
+      errEl.style.display = 'block';
+      return;
+    }
+    const user = {
+      id:           crypto.randomUUID(),
+      name:         document.getElementById('su-name').value.trim(),
+      email,
+      passwordHash: await hashStr(document.getElementById('su-pass').value),
+      phone:        document.getElementById('su-phone').value.trim(),
+      address:      document.getElementById('su-address').value.trim(),
+      city:         document.getElementById('su-city').value.trim(),
+      state:        document.getElementById('su-state').value.trim().toUpperCase(),
+      zip:          document.getElementById('su-zip').value.trim(),
+      createdAt:    new Date().toISOString(),
+    };
+    users.push(user);
+    localStorage.setItem('joyful_users', JSON.stringify(users));
+    localStorage.setItem('joyful_session', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+    window.location.href = REDIRECT;
+  });
+</script>
+</body>
+</html>

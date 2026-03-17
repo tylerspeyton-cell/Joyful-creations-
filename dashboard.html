@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owner Dashboard | Joyful Creations</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <nav>
+    <a class="brand" href="index.html">Joyful Creations</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="has-dropdown">
+        <a href="#">Menu ▾</a>
+        <ul class="dropdown">
+          <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
+          <li><a href="quotes.html">Quotes on Unique Creations</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </li>
+      <li><a href="creations.html">Shop</a></li>
+      <li><a href="quotes.html">Custom Quote</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- OWNER LOGIN -->
+<div id="owner-login" class="form-page" style="margin-top:3rem;">
+  <h1>Owner Sign In</h1>
+  <p class="subtitle">This page is for Joyful Creations staff only.</p>
+  <form id="ownerLoginForm">
+    <div class="form-group">
+      <label for="o-email">Email</label>
+      <input type="email" id="o-email" required placeholder="owner@email.com" />
+    </div>
+    <div class="form-group">
+      <label for="o-pass">Password</label>
+      <input type="password" id="o-pass" required placeholder="••••••••" />
+    </div>
+    <div id="o-error" class="review-error" style="display:none;"></div>
+    <div class="form-submit">
+      <button type="submit" class="btn" style="width:100%;">Sign In</button>
+    </div>
+  </form>
+</div>
+
+<!-- DASHBOARD -->
+<div id="owner-dashboard" style="display:none;">
+  <div class="dash-header">
+    <div>
+      <h1 style="color:var(--gold); font-size:1.8rem; margin-bottom:0.2rem;">Order Dashboard</h1>
+      <p style="opacity:0.7; font-size:0.9rem; margin:0;">Joyful Creations — Owner View</p>
+    </div>
+    <button class="btn" id="owner-logout" style="background:rgba(255,255,255,0.15);">Sign Out</button>
+  </div>
+
+  <div class="section">
+    <div class="dash-stats" id="dash-stats"></div>
+
+    <div style="display:flex; gap:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+      <button class="filter-btn active" data-filter="all">All Orders</button>
+      <button class="filter-btn" data-filter="pending">Pending</button>
+      <button class="filter-btn" data-filter="done">Completed</button>
+    </div>
+
+    <div id="order-list"></div>
+    <p id="no-orders-msg" style="color:#aaa; font-style:italic; display:none;">No orders found.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="brand">Joyful Creations</div>
+  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('nav-links');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    hamburger.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.textContent = '☰';
+  }));
+
+  const OWNER_EMAIL = 'maggie.j.peyton@icloud.com';
+  const OWNER_HASH  = '57b4c50ea55d18a00988237eb4248ad723ecf6968b0410eb3d4490c04ca9d547';
+
+  async function hashStr(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function getOrders() {
+    try { return JSON.parse(localStorage.getItem('joyful_orders')) || []; }
+    catch { return []; }
+  }
+  function saveOrders(o) { localStorage.setItem('joyful_orders', JSON.stringify(o)); }
+
+  let currentFilter = 'all';
+
+  function renderStats() {
+    const orders  = getOrders();
+    const pending = orders.filter(o => o.status === 'pending').length;
+    const done    = orders.filter(o => o.status === 'done').length;
+    document.getElementById('dash-stats').innerHTML = `
+      <div class="stat-card"><div class="stat-num">${orders.length}</div><div class="stat-label">Total Orders</div></div>
+      <div class="stat-card pending"><div class="stat-num">${pending}</div><div class="stat-label">Pending</div></div>
+      <div class="stat-card done"><div class="stat-num">${done}</div><div class="stat-label">Completed</div></div>
+    `;
+  }
+
+  function renderOrders() {
+    renderStats();
+    const orders   = getOrders();
+    const list     = document.getElementById('order-list');
+    const noMsg    = document.getElementById('no-orders-msg');
+    const filtered = currentFilter === 'all' ? orders : orders.filter(o => o.status === currentFilter);
+
+    if (filtered.length === 0) { list.innerHTML = ''; noMsg.style.display = 'block'; return; }
+    noMsg.style.display = 'none';
+
+    list.innerHTML = filtered.slice().reverse().map(o => `
+      <div class="order-card ${o.status === 'done' ? 'order-done' : ''}">
+        <div class="order-card-top">
+          <div>
+            <div class="order-customer-name">${o.customerName}</div>
+            <div class="order-meta">${o.customerEmail} &bull; ${o.customerPhone}</div>
+            <div class="order-meta">${o.address}, ${o.city}, ${o.state} ${o.zip}</div>
+          </div>
+          <span class="order-badge ${o.status === 'done' ? 'badge-done' : 'badge-pending'}">
+            ${o.status === 'done' ? 'Completed' : 'Pending'}
+          </span>
+        </div>
+        <div class="order-product-line">${o.product}${o.price ? ' &mdash; ' + o.price : ''}</div>
+        <div class="order-footer">
+          <span class="order-date">${o.date}</span>
+          <button class="btn order-toggle-btn" data-id="${o.id}">
+            ${o.status === 'done' ? 'Mark as Pending' : 'Mark as Done'}
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.order-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const orders = getOrders();
+        const order  = orders.find(o => o.id === btn.dataset.id);
+        if (order) { order.status = order.status === 'done' ? 'pending' : 'done'; saveOrders(orders); renderOrders(); }
+      });
+    });
+  }
+
+  function showDashboard() {
+    document.getElementById('owner-login').style.display     = 'none';
+    document.getElementById('owner-dashboard').style.display = 'block';
+    renderOrders();
+  }
+
+  if (sessionStorage.getItem('joyful_owner') === 'true') showDashboard();
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderOrders();
+    });
+  });
+
+  document.getElementById('ownerLoginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email  = document.getElementById('o-email').value.trim().toLowerCase();
+    const hash   = await hashStr(document.getElementById('o-pass').value);
+    const errEl  = document.getElementById('o-error');
+    if (email !== OWNER_EMAIL || hash !== OWNER_HASH) {
+      errEl.textContent = 'Incorrect email or password.';
+      errEl.style.display = 'block';
+      return;
+    }
+    sessionStorage.setItem('joyful_owner', 'true');
+    showDashboard();
+  });
+
+  document.getElementById('owner-logout').addEventListener('click', () => {
+    sessionStorage.removeItem('joyful_owner');
+    location.reload();
+  });
+</script>
+</body>
+</html>

@@ -30,6 +30,16 @@
   </nav>
 </header>
 
+<!-- ===== ACCOUNT BAR ===== -->
+<div class="account-bar" id="account-bar" style="display:none;">
+  <span id="account-greeting"></span>
+  <button class="account-signout" id="account-signout">Sign Out</button>
+</div>
+<div class="account-bar account-bar-guest" id="account-bar-guest" style="display:none;">
+  <span>Sign in to place an order</span>
+  <a href="login.html?redirect=creations.html" class="account-signin-link">Sign In / Create Account</a>
+</div>
+
 <!-- ===== PAGE HEADER ===== -->
 <div style="background:var(--dark); color:var(--white); padding:3rem 1.5rem; text-align:center;">
   <h1 style="color:var(--gold); font-size:2.2rem; margin-bottom:0.5rem;">Popular Creations &amp; Pricing</h1>
@@ -139,9 +149,27 @@
     hamburger.textContent = '☰';
   }));
 
+  // ── Account bar ──────────────────────────────────────────
+  const session = JSON.parse(localStorage.getItem('joyful_session') || 'null');
+  if (session) {
+    const bar = document.getElementById('account-bar');
+    bar.style.display = 'flex';
+    document.getElementById('account-greeting').textContent = `Hi, ${session.name.split(' ')[0]}!`;
+    document.getElementById('account-signout').addEventListener('click', () => {
+      localStorage.removeItem('joyful_session');
+      location.reload();
+    });
+  } else {
+    document.getElementById('account-bar-guest').style.display = 'flex';
+  }
+
   // ── Square Embedded Checkout Modal ──────────────────────
   function showCheckoutWindow(e) {
     e.preventDefault();
+    if (!JSON.parse(localStorage.getItem('joyful_session') || 'null')) {
+      window.location.href = 'login.html?redirect=creations.html';
+      return;
+    }
     const url = document.getElementById('embedded-checkout-modal-checkout-button').getAttribute('data-url');
     const title = 'Square Payment Links';
     const topWindow = window.top ? window.top : window;
@@ -160,9 +188,31 @@
 
   document.getElementById('embedded-checkout-modal-checkout-button').addEventListener('click', showCheckoutWindow);
 
-  // ── Congrats popup (shown when Square redirects back with ?paid=true) ──
+  // ── Congrats popup + order save ──────────────────────────
   const overlay = document.getElementById('congrats-overlay');
   if (new URLSearchParams(window.location.search).get('paid') === 'true') {
+    const s = JSON.parse(localStorage.getItem('joyful_session') || 'null');
+    if (s) {
+      const users  = JSON.parse(localStorage.getItem('joyful_users') || '[]');
+      const user   = users.find(u => u.id === s.id) || {};
+      const orders = JSON.parse(localStorage.getItem('joyful_orders') || '[]');
+      orders.push({
+        id:            crypto.randomUUID(),
+        customerId:    s.id,
+        customerName:  s.name,
+        customerEmail: s.email,
+        customerPhone: user.phone  || '',
+        address:       user.address || '',
+        city:          user.city    || '',
+        state:         user.state   || '',
+        zip:           user.zip     || '',
+        product:       'Shabby Chic Floral Sign',
+        price:         '$75',
+        date:          new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}),
+        status:        'pending',
+      });
+      localStorage.setItem('joyful_orders', JSON.stringify(orders));
+    }
     overlay.style.display = 'flex';
     history.replaceState(null, '', window.location.pathname);
   }

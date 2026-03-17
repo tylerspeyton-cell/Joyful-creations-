@@ -584,6 +584,172 @@ footer {
 
 footer .brand { color: var(--gold); font-size: 1.1rem; margin-bottom: 0.4rem; }
 
+/* ===================== ACCOUNT BAR ===================== */
+.account-bar {
+  background: var(--mid);
+  color: var(--white);
+  padding: 0.55rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  font-size: 0.88rem;
+  flex-wrap: wrap;
+}
+
+.account-bar-guest { background: #2a3a1e; }
+
+.account-signout {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: var(--white);
+  padding: 0.3rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.account-signout:hover { background: rgba(255,255,255,0.25); }
+
+.account-signin-link {
+  background: var(--gold);
+  color: var(--white);
+  padding: 0.3rem 0.9rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+.account-signin-link:hover { opacity: 0.85; }
+
+/* ===================== AUTH TABS ===================== */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 0;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.8rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  color: #888;
+  font-weight: bold;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.auth-tab.active { color: var(--dark); border-bottom-color: var(--gold); }
+.auth-tab:hover  { color: var(--dark); }
+
+/* ===================== OWNER DASHBOARD ===================== */
+.dash-header {
+  background: var(--dark);
+  color: var(--white);
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dash-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.2rem 1.8rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-width: 110px;
+  border-top: 4px solid var(--gold);
+}
+.stat-card.pending { border-top-color: #f5a623; }
+.stat-card.done    { border-top-color: #4caf50; }
+
+.stat-num   { font-size: 2rem; font-weight: bold; color: var(--dark); }
+.stat-label { font-size: 0.82rem; color: #888; margin-top: 0.2rem; }
+
+.filter-btn {
+  padding: 0.5rem 1.2rem;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  background: none;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #666;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: var(--white);
+}
+
+.order-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.3rem 1.5rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  border-left: 4px solid #f5a623;
+  transition: opacity 0.2s;
+}
+.order-card.order-done { border-left-color: #4caf50; opacity: 0.8; }
+
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.order-customer-name { font-size: 1.05rem; font-weight: bold; color: var(--dark); }
+.order-meta          { font-size: 0.85rem; color: #888; margin-top: 0.15rem; }
+.order-product-line  { font-size: 0.95rem; color: var(--accent); font-weight: bold; margin-bottom: 0.6rem; }
+
+.order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.order-date { font-size: 0.8rem; color: #bbb; }
+
+.order-toggle-btn {
+  font-size: 0.82rem;
+  padding: 0.4rem 1rem;
+}
+
+.order-badge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.badge-pending { background: #fff3e0; color: #e65100; }
+.badge-done    { background: #e8f5e9; color: #2e7d32; }
+
 /* ===================== CONGRATS MODAL ===================== */
 .congrats-overlay {
   position: fixed;
