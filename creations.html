@@ -109,6 +109,16 @@
   <a href="quotes.html" class="btn">Get a Free Quote</a>
 </div>
 
+<!-- ===== CONGRATS MODAL ===== -->
+<div id="congrats-overlay" class="congrats-overlay" style="display:none;" role="dialog" aria-modal="true">
+  <div class="congrats-box">
+    <div class="congrats-icon">🎨</div>
+    <h2 class="congrats-title">Congratulations!</h2>
+    <p class="congrats-msg">Your art is being created right now.<br>You'll receive an email soon with your estimated completion and delivery time. Thank you for supporting Joyful Creations!</p>
+    <button class="btn" id="congrats-close">Close</button>
+  </div>
+</div>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="brand">Joyful Creations</div>
@@ -149,6 +159,19 @@
   }
 
   document.getElementById('embedded-checkout-modal-checkout-button').addEventListener('click', showCheckoutWindow);
+
+  // ── Congrats popup (shown when Square redirects back with ?paid=true) ──
+  const overlay = document.getElementById('congrats-overlay');
+  if (new URLSearchParams(window.location.search).get('paid') === 'true') {
+    overlay.style.display = 'flex';
+    history.replaceState(null, '', window.location.pathname);
+  }
+  document.getElementById('congrats-close').addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
 </script>
 </body>
 </html>
