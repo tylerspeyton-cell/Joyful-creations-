@@ -321,8 +321,6 @@ nav {
 .card-desc  { font-size: 0.9rem; color: #777; flex: 1; }
 
 .card-body .btn { margin-top: 0.5rem; text-align: center; }
-.square-pay-btn { background: #006aff; }
-.square-pay-btn:hover { background: #0055cc; opacity: 1; }
 
 .card.coming-soon { opacity: 0.75; }
 
