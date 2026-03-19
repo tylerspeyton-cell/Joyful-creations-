@@ -41,15 +41,11 @@
     </div>
     <div class="form-group">
       <label for="o-pass">Password</label>
-      <div style="position:relative;">
-        <input type="password" id="o-pass" required placeholder="••••••••" style="padding-right:3rem;" />
-        <button
-          type="button"
-          id="o-pass-toggle"
-          aria-label="Show password"
-          style="position:absolute; right:0.7rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:1rem; line-height:1;"
-        >👁</button>
-      </div>
+      <input type="password" id="o-pass" required placeholder="••••••••" />
+      <label for="o-pass-show" style="display:flex; align-items:center; gap:0.45rem; margin-top:0.5rem; font-size:0.9rem; color:#555; cursor:pointer; user-select:none;">
+        <input type="checkbox" id="o-pass-show" style="width:auto; margin:0;" />
+        Show password
+      </label>
     </div>
     <div id="o-error" class="review-error" style="display:none;"></div>
     <div class="form-submit">
@@ -102,14 +98,8 @@
     hamburger.textContent = '☰';
   }));
 
-  const OWNER_EMAIL = 'maggie.j.peyton@icloud.com'.toLowerCase();
-  const OWNER_HASH  = '57b4c50ea55d18a00988237eb4248ad723ecf6968b0410eb3d4490c04ca9d547';
-  const OWNER_PASSWORD_FALLBACK = 'Yavau2017@';
-
-  async function hashStr(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
+  const OWNER_EMAILS = ['maggie.j.peyton@icloud.com', 'yavau@gmail.com'].map(e => e.toLowerCase());
+  const OWNER_PASSWORD = 'Yavau2017@';
 
   function getOrders() {
     try { return JSON.parse(localStorage.getItem('joyful_orders')) || []; }
@@ -188,15 +178,14 @@
     });
   });
 
-  document.getElementById('ownerLoginForm').addEventListener('submit', async (e) => {
+  document.getElementById('ownerLoginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email  = document.getElementById('o-email').value.trim().toLowerCase();
-    const pass   = document.getElementById('o-pass').value;
-    const hash   = await hashStr(pass);
+    const pass   = document.getElementById('o-pass').value.trim();
     const errEl  = document.getElementById('o-error');
     errEl.style.display = 'none';
-    const passwordMatches = hash === OWNER_HASH || pass === OWNER_PASSWORD_FALLBACK;
-    if (email !== OWNER_EMAIL || !passwordMatches) {
+    const passwordMatches = pass === OWNER_PASSWORD;
+    if (!OWNER_EMAILS.includes(email) || !passwordMatches) {
       errEl.textContent = 'Incorrect email or password.';
       errEl.style.display = 'block';
       return;
@@ -206,12 +195,9 @@
   });
 
   const ownerPassInput = document.getElementById('o-pass');
-  const ownerPassToggle = document.getElementById('o-pass-toggle');
-  ownerPassToggle.addEventListener('click', () => {
-    const showing = ownerPassInput.type === 'text';
-    ownerPassInput.type = showing ? 'password' : 'text';
-    ownerPassToggle.textContent = showing ? '👁' : '🙈';
-    ownerPassToggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+  const ownerPassShow = document.getElementById('o-pass-show');
+  ownerPassShow.addEventListener('change', () => {
+    ownerPassInput.type = ownerPassShow.checked ? 'text' : 'password';
   });
 
   document.getElementById('owner-logout').addEventListener('click', () => {
