@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In | Joyful Creations</title>
+  <title>Sign In | Joyful Soul Creations</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <header>
   <nav>
-    <a class="brand" href="index.html">Joyful Creations</a>
+    <a class="brand" href="index.html">Joyful Soul Creations</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -25,6 +25,7 @@
       </li>
       <li><a href="creations.html">Shop</a></li>
       <li><a href="quotes.html">Custom Quote</a></li>
+      <li><a href="login.html" class="active">Sign In / Create Account</a></li>
     </ul>
   </nav>
 </header>
@@ -39,7 +40,7 @@
   <!-- SIGN IN PANEL -->
   <div id="panel-signin">
     <h1 style="margin-top:1.5rem;">Welcome Back</h1>
-    <p class="subtitle">Sign in to your Joyful Creations account.</p>
+    <p class="subtitle">Sign in to your Joyful Soul Creations account.</p>
     <form id="signinForm">
       <div class="form-group">
         <label for="si-email">Email Address</label>
@@ -53,13 +54,34 @@
       <div class="form-submit">
         <button type="submit" class="btn" style="width:100%;">Sign In</button>
       </div>
+      <p style="margin-top:0.9rem; text-align:right;">
+        <a href="#" id="forgot-link" style="text-decoration:underline;">Forgot password?</a>
+      </p>
     </form>
+
+    <div id="forgot-panel" style="display:none; margin-top:1rem; border-top:1px solid #c8d8b8; padding-top:1rem;">
+      <p class="subtitle" style="margin-bottom:1rem;">Reset your password with your account email.</p>
+      <form id="forgotForm">
+        <div class="form-group">
+          <label for="fp-email">Account Email</label>
+          <input type="email" id="fp-email" required placeholder="jane@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="fp-pass">New Password</label>
+          <input type="password" id="fp-pass" required minlength="8" placeholder="At least 8 characters" />
+        </div>
+        <div id="fp-error" class="review-error" style="display:none;"></div>
+        <div class="form-submit">
+          <button type="submit" class="btn" style="width:100%;">Reset Password</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- SIGN UP PANEL -->
   <div id="panel-signup" style="display:none;">
     <h1 style="margin-top:1.5rem;">Create Account</h1>
-    <p class="subtitle">Join Joyful Creations to place and track orders.</p>
+    <p class="subtitle">Join Joyful Soul Creations to place and track orders.</p>
     <form id="signupForm">
       <div class="form-group">
         <label for="su-name">Full Name *</label>
@@ -75,7 +97,7 @@
       </div>
       <div class="form-group">
         <label for="su-phone">Phone Number *</label>
-        <input type="tel" id="su-phone" required placeholder="(555) 000-0000" />
+        <input type="tel" id="su-phone" required placeholder="(555) 000-0000" pattern="[0-9\-()\s+]{10,}" />
       </div>
       <div class="form-group">
         <label for="su-address">Street Address *</label>
@@ -88,11 +110,11 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;" class="zip-row">
         <div class="form-group">
           <label for="su-state">State *</label>
-          <input type="text" id="su-state" required placeholder="TX" maxlength="2" />
+          <input type="text" id="su-state" required placeholder="TX" maxlength="2" pattern="[A-Za-z]{2}" />
         </div>
         <div class="form-group">
           <label for="su-zip">ZIP Code *</label>
-          <input type="text" id="su-zip" required placeholder="75001" />
+          <input type="text" id="su-zip" required placeholder="75001" pattern="[0-9]{5}(-[0-9]{4})?" />
         </div>
       </div>
       <div id="su-error" class="review-error" style="display:none;"></div>
@@ -105,7 +127,7 @@
 </div>
 
 <footer>
-  <div class="brand">Joyful Creations</div>
+  <div class="brand">Joyful Soul Creations</div>
   <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
 </footer>
 
@@ -129,14 +151,22 @@
   const tabSignup  = document.getElementById('tab-signup');
   const panelIn    = document.getElementById('panel-signin');
   const panelUp    = document.getElementById('panel-signup');
+  const forgotLink = document.getElementById('forgot-link');
+  const forgotPanel = document.getElementById('forgot-panel');
 
   tabSignin.addEventListener('click', () => {
     tabSignin.classList.add('active'); tabSignup.classList.remove('active');
     panelIn.style.display = ''; panelUp.style.display = 'none';
+    forgotPanel.style.display = 'none';
   });
   tabSignup.addEventListener('click', () => {
     tabSignup.classList.add('active'); tabSignin.classList.remove('active');
     panelUp.style.display = ''; panelIn.style.display = 'none';
+  });
+
+  forgotLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    forgotPanel.style.display = forgotPanel.style.display === 'none' ? '' : 'none';
   });
 
   if (new URLSearchParams(window.location.search).get('mode') === 'signup') tabSignup.click();
@@ -154,12 +184,20 @@
     catch { return []; }
   }
 
+  function validatePasswordStrength(value) {
+    const hasMinLen = value.length >= 8;
+    const hasLetter = /[A-Za-z]/.test(value);
+    const hasNumber = /\d/.test(value);
+    return hasMinLen && hasLetter && hasNumber;
+  }
+
   // SIGN IN
   document.getElementById('signinForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email  = document.getElementById('si-email').value.trim().toLowerCase();
     const hash   = await hashStr(document.getElementById('si-pass').value);
     const errEl  = document.getElementById('si-error');
+    errEl.style.display = 'none';
     const user   = getUsers().find(u => u.email === email && u.passwordHash === hash);
     if (!user) {
       errEl.textContent = 'Incorrect email or password.';
@@ -170,12 +208,74 @@
     window.location.href = REDIRECT;
   });
 
+  // FORGOT PASSWORD
+  document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById('fp-error');
+    errEl.style.display = 'none';
+
+    const email = document.getElementById('fp-email').value.trim().toLowerCase();
+    const newPass = document.getElementById('fp-pass').value;
+    const users = getUsers();
+    const idx = users.findIndex(u => u.email === email);
+
+    if (idx === -1) {
+      errEl.textContent = 'No account found for that email.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!validatePasswordStrength(newPass)) {
+      errEl.textContent = 'Use at least 8 characters with at least 1 letter and 1 number.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    users[idx].passwordHash = await hashStr(newPass);
+    users[idx].updatedAt = new Date().toISOString();
+    localStorage.setItem('joyful_users', JSON.stringify(users));
+    forgotPanel.style.display = 'none';
+    document.getElementById('si-email').value = email;
+    document.getElementById('si-pass').value = '';
+    alert('Password reset successful. Please sign in with your new password.');
+  });
+
   // SIGN UP
   document.getElementById('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const errEl = document.getElementById('su-error');
+    errEl.style.display = 'none';
     const email = document.getElementById('su-email').value.trim().toLowerCase();
+    const pass  = document.getElementById('su-pass').value;
+    const phone = document.getElementById('su-phone').value.trim();
+    const state = document.getElementById('su-state').value.trim().toUpperCase();
+    const zip   = document.getElementById('su-zip').value.trim();
     const users = getUsers();
+
+    if (!validatePasswordStrength(pass)) {
+      errEl.textContent = 'Password must be at least 8 characters and include a letter and number.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!/^[0-9\-()\s+]{10,}$/.test(phone)) {
+      errEl.textContent = 'Please enter a valid phone number.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!/^[A-Za-z]{2}$/.test(state)) {
+      errEl.textContent = 'State must be a 2-letter code.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    if (!/^[0-9]{5}(-[0-9]{4})?$/.test(zip)) {
+      errEl.textContent = 'ZIP code must be 5 digits (or ZIP+4).';
+      errEl.style.display = 'block';
+      return;
+    }
+
     if (users.find(u => u.email === email)) {
       errEl.textContent = 'An account with that email already exists. Please sign in.';
       errEl.style.display = 'block';
@@ -185,12 +285,12 @@
       id:           crypto.randomUUID(),
       name:         document.getElementById('su-name').value.trim(),
       email,
-      passwordHash: await hashStr(document.getElementById('su-pass').value),
-      phone:        document.getElementById('su-phone').value.trim(),
+      passwordHash: await hashStr(pass),
+      phone,
       address:      document.getElementById('su-address').value.trim(),
       city:         document.getElementById('su-city').value.trim(),
-      state:        document.getElementById('su-state').value.trim().toUpperCase(),
-      zip:          document.getElementById('su-zip').value.trim(),
+      state,
+      zip,
       createdAt:    new Date().toISOString(),
     };
     users.push(user);
