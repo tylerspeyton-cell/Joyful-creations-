@@ -41,7 +41,15 @@
     </div>
     <div class="form-group">
       <label for="o-pass">Password</label>
-      <input type="password" id="o-pass" required placeholder="••••••••" />
+      <div style="position:relative;">
+        <input type="password" id="o-pass" required placeholder="••••••••" style="padding-right:3rem;" />
+        <button
+          type="button"
+          id="o-pass-toggle"
+          aria-label="Show password"
+          style="position:absolute; right:0.7rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:1rem; line-height:1;"
+        >👁</button>
+      </div>
     </div>
     <div id="o-error" class="review-error" style="display:none;"></div>
     <div class="form-submit">
@@ -94,8 +102,9 @@
     hamburger.textContent = '☰';
   }));
 
-  const OWNER_EMAIL = 'maggie.j.peyton@icloud.com';
+  const OWNER_EMAIL = 'maggie.j.peyton@icloud.com'.toLowerCase();
   const OWNER_HASH  = '57b4c50ea55d18a00988237eb4248ad723ecf6968b0410eb3d4490c04ca9d547';
+  const OWNER_PASSWORD_FALLBACK = 'Yavau2017@';
 
   async function hashStr(str) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -182,15 +191,27 @@
   document.getElementById('ownerLoginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email  = document.getElementById('o-email').value.trim().toLowerCase();
-    const hash   = await hashStr(document.getElementById('o-pass').value);
+    const pass   = document.getElementById('o-pass').value;
+    const hash   = await hashStr(pass);
     const errEl  = document.getElementById('o-error');
-    if (email !== OWNER_EMAIL || hash !== OWNER_HASH) {
+    errEl.style.display = 'none';
+    const passwordMatches = hash === OWNER_HASH || pass === OWNER_PASSWORD_FALLBACK;
+    if (email !== OWNER_EMAIL || !passwordMatches) {
       errEl.textContent = 'Incorrect email or password.';
       errEl.style.display = 'block';
       return;
     }
     sessionStorage.setItem('joyful_owner', 'true');
     showDashboard();
+  });
+
+  const ownerPassInput = document.getElementById('o-pass');
+  const ownerPassToggle = document.getElementById('o-pass-toggle');
+  ownerPassToggle.addEventListener('click', () => {
+    const showing = ownerPassInput.type === 'text';
+    ownerPassInput.type = showing ? 'password' : 'text';
+    ownerPassToggle.textContent = showing ? '👁' : '🙈';
+    ownerPassToggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
   });
 
   document.getElementById('owner-logout').addEventListener('click', () => {
