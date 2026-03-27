@@ -19,12 +19,13 @@
 <!-- ===== HEADER / NAV ===== -->
 <header>
   <nav>
-    <a class="brand" href="index.html">Joyful Soul Creations</a>
+    <a class="brand" href="index.html">Joyful Soul Creations &amp; Event Planning</a>
     <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="events.html" class="nav-events-link">Events</a></li>
       <li class="has-dropdown">
-        <a href="#">Menu ▾</a>
+        <a href="#">More ▾</a>
         <ul class="dropdown">
           <li><a href="creations.html">Popular Creations &amp; Pricing</a></li>
           <li><a href="quotes.html">Quotes on Unique Creations</a></li>
@@ -33,21 +34,12 @@
         </ul>
       </li>
       <li><a href="creations.html" class="active">Shop</a></li>
-      <li><a href="quotes.html">Custom Quote</a></li>
-      <li><a href="login.html">Sign In / Create Account</a></li>
+      <li><a href="events.html#contact">Contact</a></li>
+      <li><a href="tel:2542298753" class="nav-call-btn">&#128222; Call Now</a></li>
     </ul>
   </nav>
 </header>
 
-<!-- ===== ACCOUNT BAR ===== -->
-<div class="account-bar" id="account-bar" style="display:none;">
-  <span id="account-greeting"></span>
-  <button class="account-signout" id="account-signout">Sign Out</button>
-</div>
-<div class="account-bar account-bar-guest" id="account-bar-guest" style="display:none;">
-  <span>Sign in to place an order</span>
-  <a href="login.html?redirect=creations.html" class="account-signin-link">Sign In / Create Account</a>
-</div>
 
 <!-- ===== PAGE HEADER ===== -->
 <div style="background:var(--dark); color:var(--white); padding:3rem 1.5rem; text-align:center;">
@@ -140,9 +132,16 @@
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <div class="brand">Joyful Soul Creations</div>
-  <p>&copy; <span id="year"></span> &mdash; Handmade with love</p>
+  <div class="brand">Joyful Soul Creations &amp; Event Planning</div>
+  <p>Handmade with love &mdash; &copy; <span id="year"></span></p>
+  <p style="margin-top:0.5rem;">
+    &#128222; <a href="tel:2542298753" style="color:var(--gold);">254-229-8753</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="events.html#contact" style="color:var(--gold);">Contact Us</a>
+  </p>
 </footer>
+
+<a href="tel:2542298753" class="call-float">&#128222; Call Now</a>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -158,27 +157,9 @@
     hamburger.textContent = '☰';
   }));
 
-  // ── Account bar ──────────────────────────────────────────
-  const session = JSON.parse(localStorage.getItem('joyful_session') || 'null');
-  if (session) {
-    const bar = document.getElementById('account-bar');
-    bar.style.display = 'flex';
-    document.getElementById('account-greeting').textContent = `Hi, ${session.name.split(' ')[0]}!`;
-    document.getElementById('account-signout').addEventListener('click', () => {
-      localStorage.removeItem('joyful_session');
-      location.reload();
-    });
-  } else {
-    document.getElementById('account-bar-guest').style.display = 'flex';
-  }
-
   // ── Square Embedded Checkout Modal ──────────────────────
   function showCheckoutWindow(e) {
     e.preventDefault();
-    if (!JSON.parse(localStorage.getItem('joyful_session') || 'null')) {
-      window.location.href = 'login.html?redirect=creations.html';
-      return;
-    }
     const url = document.getElementById('embedded-checkout-modal-checkout-button').getAttribute('data-url');
     const title = 'Square Payment Links';
     const topWindow = window.top ? window.top : window;
@@ -197,31 +178,9 @@
 
   document.getElementById('embedded-checkout-modal-checkout-button').addEventListener('click', showCheckoutWindow);
 
-  // ── Congrats popup + order save ──────────────────────────
+  // ── Congrats popup ──────────────────────────────────────
   const overlay = document.getElementById('congrats-overlay');
   if (new URLSearchParams(window.location.search).get('paid') === 'true') {
-    const s = JSON.parse(localStorage.getItem('joyful_session') || 'null');
-    if (s) {
-      const users  = JSON.parse(localStorage.getItem('joyful_users') || '[]');
-      const user   = users.find(u => u.id === s.id) || {};
-      const orders = JSON.parse(localStorage.getItem('joyful_orders') || '[]');
-      orders.push({
-        id:            crypto.randomUUID(),
-        customerId:    s.id,
-        customerName:  s.name,
-        customerEmail: s.email,
-        customerPhone: user.phone  || '',
-        address:       user.address || '',
-        city:          user.city    || '',
-        state:         user.state   || '',
-        zip:           user.zip     || '',
-        product:       'Shabby Chic Floral Sign',
-        price:         '$75',
-        date:          new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'}),
-        status:        'pending',
-      });
-      localStorage.setItem('joyful_orders', JSON.stringify(orders));
-    }
     overlay.style.display = 'flex';
     history.replaceState(null, '', window.location.pathname);
   }
