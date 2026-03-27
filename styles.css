@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
 /* ===================== GLOBAL RESET & BASE ===================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -795,6 +797,12 @@ footer .brand { color: var(--gold); font-size: 1.1rem; margin-bottom: 0.4rem; }
   color: #555;
   line-height: 1.7;
   margin-bottom: 1.5rem;
+}
+
+/* ===================== PHONE NUMBER BUBBLE FONT ===================== */
+.phone-num {
+  font-family: 'Fredoka One', cursive;
+  letter-spacing: 1.5px;
 }
 
 /* ===================== CALL BUTTON (NAV) ===================== */
